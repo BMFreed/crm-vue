@@ -1,15 +1,25 @@
 <template>
   <ul class="sidenav app-sidenav" v-bind:class="{ open: value }">
-    <li v-for="link in links" v-bind:key="link.url">
-      <router-link
-        v-bind:to="link.url"
-        v-bind:exact="link.exact"
-        class="waves-effect waves-orange pointer"
-        active-class="active"
-      >
-        {{ link.title }}
-      </router-link>
-    </li>
+    <!--    <li v-for="link in links" v-bind:key="link.url">-->
+    <router-link
+      v-for="link in links"
+      v-bind:key="link.url"
+      v-bind:to="link.url"
+      v-bind:exact="link.exact"
+      custom
+      v-slot="{ href, navigate, isActive }"
+    >
+      <li :class="[isActive && 'active']">
+        <a
+          :href="href"
+          v-on:click="navigate"
+          class="waves-effect waves-orange pointer"
+        >
+          {{ link.title }}
+        </a>
+      </li>
+    </router-link>
+    <!--    </li>-->
   </ul>
 </template>
 
@@ -29,4 +39,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.link-active {
+  background-color: #ddd;
+}
+</style>
