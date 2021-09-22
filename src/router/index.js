@@ -4,7 +4,7 @@ import Home from "@/views/Home";
 import Login from "@/views/Login";
 import Categories from "@/views/Categories";
 import DetailRecord from "@/views/DetailRecord";
-import History from "@/layouts/History";
+import History from "@/views/History";
 import Planning from "@/views/Planning";
 import Profile from "@/views/Profile";
 import Record from "@/views/Record";
