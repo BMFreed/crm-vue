@@ -1,8 +1,7 @@
-export default function messages(page) {
-  const messageList = {
-    logout: "Вы вышли из системы"
-  };
-  if (messageList[page.$route.query.message]) {
-    page.$message(messageList[page.$route.query.message]);
-  }
-}
+export default {
+  logout: "Вы вышли из системы",
+  "auth/user-not-found": "Пользователь с таким e-mail не найден",
+  "auth/wrong-password": "Неверный пароль!",
+  "auth/email-already-in-use":
+    "Пользователь с таким e-mail уже зарегистрирован!"
+};

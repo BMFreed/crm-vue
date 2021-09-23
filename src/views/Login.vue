@@ -48,43 +48,25 @@
 </template>
 
 <script>
-import { email, required, minLength } from "vuelidate/lib/validators";
-import invalidEmail from "@/validation/invalidEmail";
-import invalidPassword from "@/validation/invalidPassword";
-import messages from "@/utils/messages";
+import { validationMixin } from "@/mixins/validationMixin";
+import { regAuthErrorMixin } from "@/mixins/regAuthErrorMixin";
+import submitFunction from "@/validation/submitFunction";
+import { email, minLength, required } from "vuelidate/lib/validators";
 
 export default {
   name: "Login.vue",
-  data() {
-    return {
-      email: "",
-      password: "",
-      required: "Обязательное поле!"
-    };
-  },
-  mounted() {
-    messages(this);
-  },
+  mixins: [validationMixin, regAuthErrorMixin],
   methods: {
     async submitHandler() {
-      if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
-      }
-      const formData = {
-        email: this.email,
-        password: this.password
-      };
-      await this.$store.dispatch("login", formData);
-      this.$router.push("/");
-    }
-  },
-  computed: {
-    emailError() {
-      return invalidEmail(this.$v, this.required);
-    },
-    passwordError() {
-      return invalidPassword(this.$v, this.required);
+      await submitFunction(
+        this.$v,
+        this.email,
+        this.password,
+        null,
+        this.$store,
+        this.$router,
+        "login"
+      );
     }
   },
   validations: {

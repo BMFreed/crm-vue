@@ -68,46 +68,25 @@
 </template>
 
 <script>
+import { validationMixin } from "@/mixins/validationMixin";
+import { regAuthErrorMixin } from "@/mixins/regAuthErrorMixin";
+import submitFunction from "@/validation/submitFunction";
 import { email, minLength, required } from "vuelidate/lib/validators";
-import invalidEmail from "@/validation/invalidEmail";
-import invalidPassword from "@/validation/invalidPassword";
-import invalidName from "@/validation/invalidName";
 
 export default {
   name: "Register",
-  data() {
-    return {
-      email: "",
-      password: "",
-      name: "",
-      agree: false,
-      required: "Обязательное поле!"
-    };
-  },
+  mixins: [validationMixin, regAuthErrorMixin],
   methods: {
-    async submitHandler() {
-      if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
-      }
-      const formData = {
-        email: this.email,
-        password: this.password,
-        name: this.name
-      };
-      await this.$store.dispatch("register", formData);
-      this.$router.push("/");
-    }
-  },
-  computed: {
-    emailError() {
-      return invalidEmail(this.$v, this.required);
-    },
-    passwordError() {
-      return invalidPassword(this.$v, this.required);
-    },
-    nameError() {
-      return invalidName(this.$v, this.required);
+    submitHandler() {
+      submitFunction(
+        this.$v,
+        this.email,
+        this.password,
+        this.name,
+        this.$store,
+        this.$router,
+        "register"
+      );
     }
   },
   validations: {

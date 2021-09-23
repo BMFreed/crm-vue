@@ -13,6 +13,8 @@ import "firebase/auth";
 import "firebase/database";
 import "materialize-css/dist/js/materialize";
 import "./registerServiceWorker";
+import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 
 Vue.use(Vuelidate);
 Vue.use(messagePlugin);
@@ -42,3 +44,6 @@ if (firebaseApp && !app) {
     render: h => h(App)
   }).$mount("#app");
 }
+
+export const auth = getAuth();
+export const database = getDatabase();
