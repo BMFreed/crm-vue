@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     error: null
   },
+
   mutations: {
     setError(state, error) {
       state.error = error;
@@ -17,6 +18,17 @@ export default new Vuex.Store({
       state.error = null;
     }
   },
+
+  actions: {
+    async fetchCurrency() {
+      const key = process.env.VUE_APP_FIXER;
+      const response = await fetch(
+        `http://data.fixer.io/api/latest?access_key=${key}&symbols=USD,EUR,RUB`
+      );
+      return await response.json();
+    }
+  },
+
   getters: {
     error: state => state.error
   },

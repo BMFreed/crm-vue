@@ -20,8 +20,5 @@ export default async function submitFunction(
     formData.name = name;
   }
   await store.dispatch(type, formData);
-  if (!Object.keys(store.getters.info).length) {
-    await store.dispatch("fetchInfo");
-  }
   router.push("/");
 }

@@ -3,26 +3,27 @@ import Vuelidate from "vuelidate";
 import App from "./App.vue";
 import EmptyLayout from "@/layouts/EmptyLayout";
 import MainLayout from "@/layouts/MainLayout";
+import Loader from "@/components/app/Loader";
 import router from "./router";
 import store from "./store";
 import dateFilter from "@/filters/date.filter";
+import currencyFilter from "@/filters/currency.filter";
 import messagePlugin from "@/utils/message.plugin";
 import { initializeApp } from "firebase/app";
-// import { onAuthStateChanged } from "firebase/auth";
 import "firebase/auth";
 import "firebase/database";
 import "materialize-css/dist/js/materialize";
 import "./registerServiceWorker";
-import { getAuth } from "firebase/auth";
-import { getDatabase } from "firebase/database";
 
 Vue.use(Vuelidate);
 Vue.use(messagePlugin);
 Vue.filter("date", dateFilter);
+Vue.filter("currency", currencyFilter);
 Vue.config.productionTip = false;
 
 Vue.component("empty-layout", EmptyLayout);
 Vue.component("main-layout", MainLayout);
+Vue.component("Loader", Loader);
 
 const firebaseApp = initializeApp({
   apiKey: "AIzaSyD3EQn6heiHBkgpjDw0JEmGrLox0PUAcNY",
@@ -44,6 +45,3 @@ if (firebaseApp && !app) {
     render: h => h(App)
   }).$mount("#app");
 }
-
-export const auth = getAuth();
-export const database = getDatabase();
