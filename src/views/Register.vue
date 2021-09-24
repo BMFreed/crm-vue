@@ -70,7 +70,7 @@
 <script>
 import { validationMixin } from "@/mixins/validationMixin";
 import { regAuthErrorMixin } from "@/mixins/regAuthErrorMixin";
-import submitFunction from "@/validation/submitFunction";
+import submitFunction from "@/validation/reg-auth/submitFunction";
 import { email, minLength, required } from "vuelidate/lib/validators";
 
 export default {

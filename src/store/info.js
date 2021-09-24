@@ -1,5 +1,5 @@
-import { getDatabase, onValue, ref } from "firebase/database";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import firebase from "firebase/app";
+
 export default {
   state: {
     info: {}
@@ -13,22 +13,18 @@ export default {
     }
   },
   actions: {
-    async fetchInfo({ commit }) {
-      const auth = getAuth();
-      onAuthStateChanged(auth, async user => {
-        if (user) {
-          const userId = user.uid;
-          const database = getDatabase();
-          const infoRef = await ref(database, "users/" + userId + "/info");
-          onValue(infoRef, snapshot => {
-            const info = snapshot.val();
-            commit("setInfo", info);
-          });
-        }
-      });
+    async fetchInfo({ dispatch, commit }) {
+      const uid = await dispatch("getUserId");
+      const info = (
+        await firebase
+          .database()
+          .ref(`/users/${uid}/info`)
+          .once("value")
+      ).val();
+      commit("setInfo", info);
     }
   },
   getters: {
-    info: state => state.info
+    info: s => s.info
   }
 };

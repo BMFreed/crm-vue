@@ -1,41 +1,37 @@
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut,
-  getAuth
-} from "firebase/auth";
-import { set, ref, getDatabase } from "firebase/database";
+import firebase from "firebase/app";
 
 export default {
   actions: {
-    async register({ dispatch, commit }, { email, password, name }) {
-      try {
-        const auth = getAuth();
-        await createUserWithEmailAndPassword(auth, email, password);
-        const userId = await dispatch("getUserId");
-        const database = getDatabase();
-        await set(ref(database, "users/" + userId + "/info"), {
-          bill: 10000,
-          name
-        });
-      } catch (error) {
-        commit("setError", error);
-        throw error;
-      }
-    },
-
     async login({ commit }, { email, password }) {
       try {
-        const auth = getAuth();
-        await signInWithEmailAndPassword(auth, email, password);
-      } catch (error) {
-        commit("setError", error);
-        throw error;
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+      } catch (e) {
+        commit("setError", e);
+        throw e;
       }
     },
-
+    async register({ dispatch, commit }, { email, password, name }) {
+      try {
+        await firebase.auth().createUserWithEmailAndPassword(email, password);
+        const uid = await dispatch("getUserId");
+        await firebase
+          .database()
+          .ref(`/users/${uid}/info`)
+          .set({
+            bill: 10000,
+            name
+          });
+      } catch (e) {
+        commit("setError", e);
+        throw e;
+      }
+    },
+    getUserId() {
+      const user = firebase.auth().currentUser;
+      return user ? user.uid : null;
+    },
     async logout({ commit }) {
-      await signOut;
+      await firebase.auth().signOut();
       commit("clearInfo");
     }
   }

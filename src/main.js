@@ -9,11 +9,14 @@ import store from "./store";
 import dateFilter from "@/filters/date.filter";
 import currencyFilter from "@/filters/currency.filter";
 import messagePlugin from "@/utils/message.plugin";
-import { initializeApp } from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
 import "materialize-css/dist/js/materialize";
 import "./registerServiceWorker";
+
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
 
 Vue.use(Vuelidate);
 Vue.use(messagePlugin);
@@ -25,7 +28,7 @@ Vue.component("empty-layout", EmptyLayout);
 Vue.component("main-layout", MainLayout);
 Vue.component("Loader", Loader);
 
-const firebaseApp = initializeApp({
+firebase.initializeApp({
   apiKey: "AIzaSyD3EQn6heiHBkgpjDw0JEmGrLox0PUAcNY",
   authDomain: "crm-vue-8f01c.firebaseapp.com",
   projectId: "crm-vue-8f01c",
@@ -37,11 +40,13 @@ const firebaseApp = initializeApp({
     "https://crm-vue-8f01c-default-rtdb.europe-west1.firebasedatabase.app"
 });
 
-let app = null;
-if (firebaseApp && !app) {
-  app = new Vue({
-    router,
-    store,
-    render: h => h(App)
-  }).$mount("#app");
-}
+let app;
+firebase.auth().onAuthStateChanged(() => {
+  if (!app) {
+    app = new Vue({
+      router,
+      store,
+      render: h => h(App)
+    }).$mount("#app");
+  }
+});
