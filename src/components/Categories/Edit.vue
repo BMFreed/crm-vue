@@ -7,8 +7,14 @@
 
       <form>
         <div class="input-field">
-          <select>
-            <option>Category</option>
+          <select ref="select">
+            <option
+              v-for="category of categories"
+              v-bind:key="category.id"
+              value="category.id"
+            >
+              {{ category.title }}
+            </option>
           </select>
           <label>Выберите категорию</label>
         </div>
@@ -35,8 +41,30 @@
 </template>
 
 <script>
+import M from "materialize-css";
+import { categoriesMixin } from "@/mixins/categoriesMixin";
 export default {
-  name: "Edit"
+  name: "Edit",
+  props: {
+    categories: {
+      type: Array,
+      required: true
+    }
+  },
+  mixins: [categoriesMixin],
+  data() {
+    return {
+      select: null
+    };
+  },
+  mounted() {
+    M.FormSelect.init(this.$refs.select);
+  },
+  destroyed() {
+    if (this.select && this.select.destroy) {
+      this.select.destroy;
+    }
+  }
 };
 </script>
 

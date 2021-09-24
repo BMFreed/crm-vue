@@ -21,7 +21,6 @@
 <script>
 import Navbar from "@/components/app/Navbar";
 import Sidebar from "@/components/app/Sidebar";
-import M from "materialize-css";
 export default {
   name: "MainLayout",
   components: {
@@ -35,7 +34,6 @@ export default {
     if (!Object.keys(this.$store.getters.info).length) {
       await this.$store.dispatch("fetchInfo");
     }
-    M.updateTextFields();
   },
   computed: {
     loaded() {

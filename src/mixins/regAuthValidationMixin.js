@@ -3,7 +3,7 @@ import invalidPassword from "@/validation/reg-auth/invalidPassword";
 import invalidName from "@/validation/reg-auth/invalidName";
 import messages from "@/utils/messages";
 
-export const validationMixin = {
+export const regAuthValidationMixin = {
   data() {
     return {
       email: "",

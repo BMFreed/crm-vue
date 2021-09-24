@@ -1,4 +1,4 @@
-export default function invalidName(validator, requiredMessage) {
+export default function invalidEmail(validator, requiredMessage) {
   const empty = validator.email.$dirty && !validator.email.required;
   const notEmail = validator.email.$dirty && !validator.email.email;
   const errors = [
