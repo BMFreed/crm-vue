@@ -5,13 +5,13 @@
         <h4>Редактировать</h4>
       </div>
 
-      <form>
+      <form v-on:submit.prevent="submitHandler">
         <div class="input-field">
-          <select ref="select">
+          <select ref="select" v-model="current">
             <option
               v-for="category of categories"
               v-bind:key="category.id"
-              value="category.id"
+              v-bind:value="category.id"
             >
               {{ category.title }}
             </option>
@@ -20,15 +20,29 @@
         </div>
 
         <div class="input-field">
-          <input type="text" id="name" />
+          <input
+            id="name"
+            type="text"
+            v-model="title"
+            v-bind:class="{ invalid: isInvalidTitle }"
+          />
           <label for="name">Название</label>
-          <span class="helper-text invalid">TITLE</span>
+          <span v-if="isInvalidTitle" class="helper-text invalid">
+            {{ isInvalidTitle }}
+          </span>
         </div>
 
         <div class="input-field">
-          <input id="limit" type="number" />
+          <input
+            id="limit"
+            type="number"
+            v-model.number="limit"
+            v-bind:class="{ invalid: isInvalidLimit }"
+          />
           <label for="limit">Лимит</label>
-          <span class="helper-text invalid">LIMIT</span>
+          <span v-if="isInvalidLimit" class="helper-text invalid">
+            {{ isInvalidLimit }}
+          </span>
         </div>
 
         <button class="btn waves-effect waves-light" type="submit">
@@ -43,6 +57,7 @@
 <script>
 import M from "materialize-css";
 import { categoriesMixin } from "@/mixins/categoriesMixin";
+import submitFunction from "@/validation/categories/submitFunction";
 export default {
   name: "Edit",
   props: {
@@ -54,8 +69,20 @@ export default {
   mixins: [categoriesMixin],
   data() {
     return {
-      select: null
+      select: null,
+      current: null
     };
+  },
+  methods: {
+    submitHandler() {
+      submitFunction(this, "edit");
+    }
+  },
+  created() {
+    const { id, title, limit } = this.categories[0];
+    this.current = id;
+    this.title = title;
+    this.limit = limit;
   },
   mounted() {
     M.FormSelect.init(this.$refs.select);
@@ -63,6 +90,15 @@ export default {
   destroyed() {
     if (this.select && this.select.destroy) {
       this.select.destroy;
+    }
+  },
+  watch: {
+    current(categoryId) {
+      const { title, limit } = this.categories.find(
+        category => category.id === categoryId
+      );
+      this.title = title;
+      this.limit = limit;
     }
   }
 };

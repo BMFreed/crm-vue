@@ -42,30 +42,14 @@
 </template>
 
 <script>
-// import { required, minValue } from "vuelidate/lib/validators";
-// import invalidTitle from "@/validation/categories/invalidTitle";
-// import invalidLimit from "@/validation/categories/invalidLimit";
-// import M from "materialize-css";
 import { categoriesMixin } from "@/mixins/categoriesMixin";
+import submitFunction from "@/validation/categories/submitFunction";
 export default {
   name: "Create",
   mixins: [categoriesMixin],
   methods: {
-    async submitHandler() {
-      if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
-      }
-      const category = await this.$store.dispatch("createCategory", {
-        title: this.title,
-        limit: this.limit
-      });
-      console.log(category);
-      this.title = "";
-      this.limit = this.$v.limit.$params.minValue.min;
-      this.$v.reset;
-      this.$message("Категория была создана!");
-      this.$emit("created", category);
+    submitHandler() {
+      submitFunction(this, "create");
     }
   }
 };

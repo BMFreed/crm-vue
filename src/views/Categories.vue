@@ -7,7 +7,13 @@
       <Loader v-if="loading" />
       <div v-else class="row">
         <Create v-on:created="addNewCategory" />
-        <Edit v-bind:categories="categories" />
+        <Edit
+          v-if="categories.length"
+          v-bind:categories="categories"
+          v-bind:key="categories.length + updateCount"
+          v-on:updated="updateCategories"
+        />
+        <p v-else class="center">Категорий пока нет...</p>
       </div>
     </section>
   </div>
@@ -16,22 +22,25 @@
 <script>
 import Create from "@/components/Categories/Create";
 import Edit from "@/components/Categories/Edit";
+import { financialDataMixin } from "@/mixins/financialDataMixin";
 export default {
   name: "Categories",
   components: { Create, Edit },
+  mixins: [financialDataMixin],
   data() {
     return {
-      categories: [],
-      loading: true
+      updateCount: 0
     };
-  },
-  async mounted() {
-    this.categories = await this.$store.dispatch("fetchCategories");
-    this.loading = false;
   },
   methods: {
     addNewCategory(category) {
       this.categories.push(category);
+    },
+    updateCategories(category) {
+      const index = this.categories.findIndex(cat => cat.id === category.id);
+      this.categories[index].title = category.title;
+      this.categories[index].limit = category.limit;
+      this.updateCount++;
     }
   }
 };
