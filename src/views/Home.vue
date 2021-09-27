@@ -32,7 +32,6 @@ export default {
   data() {
     return {
       loading: true,
-      resolved: false,
       currency: null
     };
   },

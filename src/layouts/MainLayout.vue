@@ -21,8 +21,10 @@
 <script>
 import Navbar from "@/components/app/Navbar";
 import Sidebar from "@/components/app/Sidebar";
+import { firebaseErrorMixin } from "@/mixins/firebaseErrorMixin";
 export default {
   name: "MainLayout",
+  mixins: [firebaseErrorMixin],
   components: {
     Navbar,
     Sidebar

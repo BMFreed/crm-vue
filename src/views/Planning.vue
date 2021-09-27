@@ -10,8 +10,12 @@
       <router-link to="/categories">добавьте их!</router-link>
     </p>
     <section v-else>
-      <div v-for="category in filteredCategories" v-bind:key="category.id">
-        <p v-tooltip="category.tooltip">
+      <div
+        v-for="category in filteredCategories"
+        v-bind:key="category.id"
+        v-tooltip="category.tooltip"
+      >
+        <p>
           <strong>{{ category.title }}:</strong>
           {{ category.spend | currency }} из {{ category.limit | currency }}
         </p>

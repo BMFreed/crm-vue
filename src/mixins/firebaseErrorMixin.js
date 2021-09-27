@@ -1,5 +1,5 @@
 import messages from "@/utils/messages";
-export const regAuthErrorMixin = {
+export const firebaseErrorMixin = {
   computed: {
     error() {
       return this.$store.getters.error;

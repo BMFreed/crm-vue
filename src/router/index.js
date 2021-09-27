@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import firebase from "firebase/app";
 import Home from "@/views/Home";
 import Login from "@/views/Login";
 import Categories from "@/views/Categories";
@@ -12,77 +13,69 @@ import Register from "@/views/Register";
 
 Vue.use(VueRouter);
 
+const meta = {
+  regAuth: {
+    layout: "empty"
+  },
+  main: {
+    layout: "main",
+    auth: true
+  }
+};
+
 const routes = [
   {
     path: "/",
     name: "home",
-    meta: {
-      layout: "main"
-    },
+    meta: meta.main,
     component: Home
   },
   {
     path: "/login",
     name: "login",
-    meta: {
-      layout: "empty"
-    },
+    meta: meta.regAuth,
     component: Login
   },
   {
     path: "/register",
     name: "register",
-    meta: {
-      layout: "empty"
-    },
+    meta: meta.regAuth,
     component: Register
   },
   {
     path: "/categories",
     name: "categories",
-    meta: {
-      layout: "main"
-    },
+    meta: meta.main,
     component: Categories
   },
   {
-    path: "/detail-record",
+    path: "/detail-record/:id",
     name: "detail-record",
-    meta: {
-      layout: "main"
-    },
+    meta: meta.main,
     component: DetailRecord
   },
   {
     path: "/history",
     name: "history",
-    meta: {
-      layout: "main"
-    },
+    meta: meta.main,
     component: History
   },
   {
     path: "/planning",
     name: "planning",
-    meta: {
-      layout: "main"
-    },
+    meta: meta.main,
     component: Planning
   },
   {
     path: "/profile",
     name: "profile",
-    meta: {
-      layout: "main"
-    },
+    meta: meta.main,
     component: Profile
   },
   {
     path: "/record",
     name: "record",
-    meta: {
-      layout: "main"
-    },
+    meta: meta.main,
     component: Record
   }
 ];
@@ -91,6 +84,17 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  const currentUser = firebase.auth().currentUser;
+  const requiresAuth = to.matched.some(record => record.meta.auth);
+
+  if (requiresAuth && !currentUser) {
+    next("/login?message=login");
+  } else {
+    next();
+  }
 });
 
 export default router;

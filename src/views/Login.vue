@@ -49,13 +49,13 @@
 
 <script>
 import { regAuthValidationMixin } from "@/mixins/regAuthValidationMixin.js";
-import { regAuthErrorMixin } from "@/mixins/regAuthErrorMixin";
+import { firebaseErrorMixin } from "@/mixins/firebaseErrorMixin";
 import submitFunction from "@/validation/reg-auth/submitFunction";
 import { email, minLength, required } from "vuelidate/lib/validators";
 
 export default {
   name: "Login.vue",
-  mixins: [regAuthValidationMixin, regAuthErrorMixin],
+  mixins: [regAuthValidationMixin, firebaseErrorMixin],
   methods: {
     async submitHandler() {
       await submitFunction(
