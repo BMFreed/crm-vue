@@ -3,7 +3,7 @@
     <Loader v-if="!loaded" />
     <div v-else class="app-main-layout">
       <Navbar v-on:click="isOpen = !isOpen" />
-      <Sidebar v-model="isOpen" />
+      <Sidebar v-model="isOpen" v-bind:key="locale" />
       <main class="app-content" v-bind:class="{ full: !isOpen }">
         <div class="app-page">
           <router-view />
@@ -40,6 +40,9 @@ export default {
   computed: {
     loaded() {
       return Object.keys(this.$store.getters.info).length;
+    },
+    locale() {
+      return this.$store.getters.info.locale;
     }
   }
 };

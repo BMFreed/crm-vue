@@ -2,7 +2,7 @@
   ><div class="col s12 m6">
     <div>
       <div class="page-subtitle">
-        <h4>Редактировать</h4>
+        <h4>{{ "Edit" | localize }}</h4>
       </div>
 
       <form v-on:submit.prevent="submitHandler">
@@ -16,17 +16,17 @@
               {{ category.title }}
             </option>
           </select>
-          <label>Выберите категорию</label>
+          <label>{{ "Pick_category" | localize }}</label>
         </div>
 
         <div class="input-field">
           <input
-            id="name"
+            id="update_name"
             type="text"
             v-model="title"
             v-bind:class="{ invalid: isInvalidTitle }"
           />
-          <label for="name">Название</label>
+          <label for="update_name">{{ "Title" | localize }}</label>
           <span v-if="isInvalidTitle" class="helper-text invalid">
             {{ isInvalidTitle }}
           </span>
@@ -34,19 +34,19 @@
 
         <div class="input-field">
           <input
-            id="limit"
+            id="update_limit"
             type="number"
             v-model.number="limit"
             v-bind:class="{ invalid: isInvalidLimit }"
           />
-          <label for="limit">Лимит</label>
+          <label for="update_limit">{{ "Limit" | localize }}</label>
           <span v-if="isInvalidLimit" class="helper-text invalid">
             {{ isInvalidLimit }}
           </span>
         </div>
 
         <button class="btn waves-effect waves-light" type="submit">
-          Обновить
+          {{ "Update" | localize }}
           <i class="material-icons right">send</i>
         </button>
       </form>

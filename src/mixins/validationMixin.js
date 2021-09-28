@@ -1,9 +1,9 @@
-import invalidEmail from "@/validation/reg-auth/invalidEmail";
-import invalidPassword from "@/validation/reg-auth/invalidPassword";
-import invalidName from "@/validation/reg-auth/invalidName";
+import invalidEmail from "@/validation/invalidEmail";
+import invalidPassword from "@/validation/invalidPassword";
+import invalidName from "@/validation/invalidName";
 import messages from "@/utils/messages";
 
-export const regAuthValidationMixin = {
+export const validationMixin = {
   data() {
     return {
       email: "",

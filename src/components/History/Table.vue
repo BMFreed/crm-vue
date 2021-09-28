@@ -3,11 +3,11 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Сумма</th>
-        <th>Дата</th>
-        <th>Категория</th>
-        <th>Тип</th>
-        <th>Открыть</th>
+        <th>{{ "Amount" | localize }}</th>
+        <th>{{ "Date" | localize }}</th>
+        <th>{{ "Category" | localize }}</th>
+        <th>{{ "Type" | localize }}</th>
+        <th>{{ "Open" | localize }}</th>
       </tr>
     </thead>
 
@@ -19,7 +19,7 @@
         <td>{{ record.categoryName }}</td>
         <td>
           <span v-bind:class="[record.typeClass]" class="white-text badge">
-            {{ record.typeText }}
+            {{ capitalize(record.type) | localize }}
           </span>
         </td>
         <td>
@@ -43,6 +43,12 @@ export default {
     records: {
       required: true,
       type: Array
+    }
+  },
+  methods: {
+    capitalize(text) {
+      const capitalStr = text.charAt(0).toUpperCase() + text.slice(1);
+      return capitalStr;
     }
   }
 };

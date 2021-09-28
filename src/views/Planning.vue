@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>Планирование</h3>
+      <h3>{{ "Planning" | localize }}</h3>
       <h4>{{ info.bill | currency("RUB") }}</h4>
     </div>
     <Loader v-if="loading" />
     <p v-else-if="!categories.length" class="center">
-      Категорий пока нет,
-      <router-link to="/categories">добавьте их!</router-link>
+      {{ "No_categories" | localize }}
+      <router-link to="/categories">{{ "Add_them" | localize }}</router-link>
     </p>
     <section v-else>
       <div
@@ -17,7 +17,8 @@
       >
         <p>
           <strong>{{ category.title }}:</strong>
-          {{ category.spend | currency }} из {{ category.limit | currency }}
+          {{ category.spend | currency }} {{ "Of" | localize }}
+          {{ category.limit | currency }}
         </p>
         <div class="progress">
           <div

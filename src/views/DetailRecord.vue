@@ -4,9 +4,11 @@
     <p v-else-if="!this.record" class="center">Запись не найдена</p>
     <div v-else>
       <div class="breadcrumb-wrap">
-        <router-link to="/history" class="breadcrumb">История</router-link>
+        <router-link to="/history" class="breadcrumb">
+          {{ "History" | localize }}
+        </router-link>
         <a class="breadcrumb">
-          {{ record.type === "income" ? "Доход" : "Расход" }}
+          {{ record.type === "income" ? income : outcome }}
         </a>
       </div>
       <div class="row">
@@ -19,9 +21,9 @@
             class="card"
           >
             <div class="card-content white-text">
-              <p>Описание: {{ record.description }}</p>
-              <p>Сумма: {{ record.amount | currency }}</p>
-              <p>Категория: {{ record.categoryName }}</p>
+              <p>{{ "Description" | localize }}: {{ record.description }}</p>
+              <p>{{ "Amount" | localize }}: {{ record.amount | currency }}</p>
+              <p>{{ "Category" | localize }}: {{ record.categoryName }}</p>
 
               <small>{{ record.date | date("datetime") }}</small>
             </div>
@@ -33,6 +35,7 @@
 </template>
 
 <script>
+import localizeFilter from "@/filters/localize.filter";
 export default {
   name: "Detail-record",
   data() {
@@ -40,6 +43,14 @@ export default {
       record: null,
       loading: true
     };
+  },
+  computed: {
+    income() {
+      return localizeFilter("Income");
+    },
+    outcome() {
+      return localizeFilter("Outcome");
+    }
   },
   async mounted() {
     const id = this.$route.params.id;

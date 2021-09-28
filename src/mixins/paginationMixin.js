@@ -1,4 +1,5 @@
 import _ from "lodash";
+import localizeFilter from "@/filters/localize.filter";
 
 export const paginationMixin = {
   data() {
@@ -19,6 +20,14 @@ export const paginationMixin = {
     paginationHandler(page) {
       this.$router.push(`${this.$route.path}?page=${page}`);
       this.items = this.allItems[page - 1] || this.allItems[0];
+    }
+  },
+  computed: {
+    forward() {
+      return localizeFilter("Forward");
+    },
+    back() {
+      return localizeFilter("Back");
     }
   }
 };

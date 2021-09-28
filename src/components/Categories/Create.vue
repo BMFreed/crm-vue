@@ -2,18 +2,18 @@
   <div class="col s12 m6">
     <div>
       <div class="page-subtitle">
-        <h4>Создать</h4>
+        <h4>{{ "Create" | localize }}</h4>
       </div>
 
       <form v-on:submit.prevent="submitHandler">
         <div class="input-field">
           <input
-            id="name"
+            id="create_name"
             type="text"
             v-model="title"
             v-bind:class="{ invalid: isInvalidTitle }"
           />
-          <label for="name">Название</label>
+          <label for="create_name">{{ "Title" | localize }}</label>
           <span v-if="isInvalidTitle" class="helper-text invalid">
             {{ isInvalidTitle }}
           </span>
@@ -21,19 +21,19 @@
 
         <div class="input-field">
           <input
-            id="limit"
+            id="create_limit"
             type="number"
             v-model.number="limit"
             v-bind:class="{ invalid: isInvalidLimit }"
           />
-          <label for="limit">Лимит</label>
+          <label for="create_limit">{{ "Limit" | localize }}</label>
           <span v-if="isInvalidLimit" class="helper-text invalid">
             {{ isInvalidLimit }}
           </span>
         </div>
 
         <button class="btn waves-effect waves-light" type="submit">
-          Создать
+          {{ "Create" | localize }}
           <i class="material-icons right">send</i>
         </button>
       </form>

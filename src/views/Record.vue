@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>Новая запись</h3>
+      <h3>{{ "New_record" | localize }}</h3>
     </div>
     <Loader v-if="loading" />
     <p v-else-if="!categories.length" class="center">
-      Категорий пока нет,
-      <router-link to="/categories">добавьте их!</router-link>
+      {{ "No_categories" | localize }}
+      <router-link to="/categories">{{ "Add_them" | localize }}</router-link>
     </p>
     <form v-else class="form" v-on:submit.prevent="submitHandler">
       <div class="input-field">
@@ -19,7 +19,7 @@
             {{ category.title }}
           </option>
         </select>
-        <label>Выберите категорию</label>
+        <label>{{ "Pick_category" | localize }}</label>
       </div>
 
       <p>
@@ -31,7 +31,7 @@
             value="income"
             v-model="type"
           />
-          <span>Доход</span>
+          <span>{{ "Income" | localize }}</span>
         </label>
       </p>
 
@@ -44,7 +44,7 @@
             value="outcome"
             v-model="type"
           />
-          <span>Расход</span>
+          <span>{{ "Outcome" | localize }}</span>
         </label>
       </p>
 
@@ -55,7 +55,7 @@
           type="number"
           v-bind:class="{ invalid: isInvalidAmount }"
         />
-        <label for="amount">Сумма</label>
+        <label for="amount">{{ "Amount" | localize }}</label>
         <span v-if="isInvalidAmount" class="helper-text invalid">
           {{ isInvalidAmount }}
         </span>
@@ -68,14 +68,14 @@
           type="text"
           v-bind:class="{ invalid: isInvalidDescription }"
         />
-        <label for="description">Описание</label>
+        <label for="description">{{ "Description" | localize }}</label>
         <span v-if="isInvalidDescription" class="helper-text invalid">
           {{ isInvalidDescription }}
         </span>
       </div>
 
       <button class="btn waves-effect waves-light" type="submit">
-        Создать
+        {{ "Create" | localize }}
         <i class="material-icons right">send</i>
       </button>
     </form>
