@@ -12,7 +12,16 @@
       <router-link to="/record">добавьте их!</router-link>
     </p>
     <section v-else>
-      <Table v-bind:records="filteredRecords" />
+      <Table v-bind:records="items" />
+      <Paginate
+        v-model="page"
+        :page-count="pageCount"
+        :click-handler="paginationHandler"
+        :prev-text="'Назад'"
+        :next-text="'Вперёд'"
+        :container-class="'pagination no-select center'"
+        :page-class="'waves-effect'"
+      />
     </section>
   </div>
 </template>
@@ -20,9 +29,10 @@
 <script>
 import Table from "@/components/History/Table";
 import { financialDataMixin } from "@/mixins/financialDataMixin";
+import { paginationMixin } from "@/mixins/paginationMixin";
 export default {
   name: "History",
-  mixins: [financialDataMixin],
+  mixins: [financialDataMixin, paginationMixin],
   components: {
     Table
   },
@@ -44,6 +54,8 @@ export default {
         typeText: record.type === "income" ? "доход" : "расход"
       };
     });
+    this.filteredRecords = this.filteredRecords.slice().reverse();
+    this.setupPagination(this.filteredRecords);
     this.loading = false;
   }
 };

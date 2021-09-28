@@ -10,6 +10,7 @@ import dateFilter from "@/filters/date.filter";
 import currencyFilter from "@/filters/currency.filter";
 import messagePlugin from "@/utils/message.plugin";
 import tooltipDirective from "@/utils/tooltip.directive";
+import Paginate from "vuejs-paginate";
 import "firebase/auth";
 import "firebase/database";
 import "materialize-css/dist/js/materialize";
@@ -29,6 +30,7 @@ Vue.config.productionTip = false;
 Vue.component("empty-layout", EmptyLayout);
 Vue.component("main-layout", MainLayout);
 Vue.component("Loader", Loader);
+Vue.component("Paginate", Paginate);
 
 firebase.initializeApp({
   apiKey: "AIzaSyD3EQn6heiHBkgpjDw0JEmGrLox0PUAcNY",
